@@ -6,3 +6,9 @@ ElevatedButton(
   },
   child: const Text('Ouvrir la base'),
 ),
+_bouton('Test : prix du produit 1 + 1 DT', () async {
+            final p = await produitDao.lireProduitParId(1);
+            if (p == null) return;
+            final n = await produitDao.modifierProduit(p.copyWith(prix: p.prix + 1));
+            debugPrint('Lignes modifiées : $n');
+          }),

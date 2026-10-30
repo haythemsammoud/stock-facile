@@ -11,3 +11,20 @@ final lignes = await db.query(
   limit: 1,
 );
 return lignes.isEmpty ? null : Produit.fromMap(lignes.first);
+Future<int> changerDisponibilite(int id, bool disponible) async {
+  final db = await DatabaseHelper().database;
+  return db.update(
+    table,
+    {'disponible': disponible ? 1 : 0},
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
+$Future<int> ajusterQuantite(int id, int delta) async {
+  final db = await DatabaseHelper().database;
+  return db.rawUpdate(
+    'UPDATE produits SET quantite = quantite + ? '
+    'WHERE id = ? AND quantite + ? >= 0',
+    [delta, id, delta],
+  );
+}
