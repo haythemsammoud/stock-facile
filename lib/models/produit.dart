@@ -30,34 +30,36 @@ class Produit {
   }
 
   Map<String, dynamic> toMap() {
-    // À écrire (Q2.4)
+    return {
+      if (id != null) 'id': id,
+      'nom': nom,
+      'prix': prix,
+      'quantite': quantite,
+      'disponible': disponible ? 1 : 0,          // bool → 0 / 1
+      'date_ajout': dateAjout.toIso8601String(), // DateTime → texte ISO 8601
+      'categorie_id': categorieId,               // camelCase → snake_case
+    };
   }
+Produit copyWith({
+  int? id,
+  String? nom,
+  double? prix,
+  int? quantite,
+  bool? disponible,
+  DateTime? dateAjout,
+  int? categorieId,
+}) {
+  return Produit(
+    id: id ?? this.id,
+    nom: nom ?? this.nom,
+    prix: prix ?? this.prix,
+    quantite: quantite ?? this.quantite,
+    disponible: disponible ?? this.disponible,
+    dateAjout: dateAjout ?? this.dateAjout,
+    categorieId: categorieId ?? this.categorieId,
+  );
 }
-
-  Produit copyWith({
-    int? id,
-    String? nom,
-    double? prix,
-    int? quantite,
-    bool? disponible,
-    DateTime? dateAjout,
-    int? categorieId,
-    int? seuilAlerte,
-  }) {
-    return Produit(
-      id: id ?? this.id,
-      nom: nom ?? this.nom,
-      prix: prix ?? this.prix,
-      quantite: quantite ?? this.quantite,
-      disponible: disponible ?? this.disponible,
-      dateAjout: dateAjout ?? this.dateAjout,
-      categorieId: categorieId ?? this.categorieId,
-      seuilAlerte: seuilAlerte ?? this.seuilAlerte,
-    );
-  }
-
   @override
   String toString() =>
-      'Produit(id: $id, nom: $nom, prix: $prix, quantite: $quantite, '
-      'disponible: $disponible, categorieId: $categorieId)';
+      'Produit(id: $id, nom: $nom, prix: $prix, quantite: $quantite)';
 }
